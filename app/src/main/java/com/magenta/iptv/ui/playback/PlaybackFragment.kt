@@ -20,6 +20,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.hls.HlsMediaSource
 import androidx.media3.ui.PlayerView
 import com.magenta.iptv.R
+import com.magenta.iptv.data.ChannelStore
 import com.magenta.iptv.data.model.Channel
 import com.magenta.iptv.data.model.Programme
 import com.magenta.iptv.data.repository.ChannelRepository
@@ -28,14 +29,12 @@ import kotlinx.coroutines.launch
 class PlaybackFragment : Fragment() {
 
     companion object {
-        private const val ARG_CHANNELS = "channels"
         private const val ARG_SELECTED_INDEX = "selectedIndex"
         private const val INFO_OVERLAY_DURATION_MS = 3000L
 
-        fun newInstance(channels: ArrayList<Channel>, selectedIndex: Int): PlaybackFragment {
+        fun newInstance(selectedIndex: Int): PlaybackFragment {
             val fragment = PlaybackFragment()
             val args = Bundle()
-            args.putParcelableArrayList(ARG_CHANNELS, channels)
             args.putInt(ARG_SELECTED_INDEX, selectedIndex)
             fragment.arguments = args
             return fragment
@@ -43,7 +42,7 @@ class PlaybackFragment : Fragment() {
     }
 
     private var exoPlayer: ExoPlayer? = null
-    private var channels: ArrayList<Channel> = emptyList<Channel>() as ArrayList<Channel>
+    private var channels: List<Channel> = emptyList()
     private var currentIndex: Int = 0
     private var epgData: Map<String, Programme> = emptyMap()
 
@@ -59,8 +58,7 @@ class PlaybackFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        channels = arguments?.getParcelableArrayList(ARG_CHANNELS)
-            ?: emptyList<Channel>() as ArrayList<Channel>
+        channels = ChannelStore.load(requireContext())
         currentIndex = arguments?.getInt(ARG_SELECTED_INDEX, 0) ?: 0
     }
 
@@ -114,7 +112,6 @@ class PlaybackFragment : Fragment() {
                     epgData = epg
                 }
                 .onFailure {
-                    // EPG fetch failure should not crash the app
                 }
         }
     }
@@ -147,6 +144,7 @@ class PlaybackFragment : Fragment() {
     }
 
     private fun playChannel(index: Int) {
+        if (index < 0 || index >= channels.size) return
         val channel = channels[index]
         val mediaSource = HlsMediaSource.Factory(DefaultHttpDataSource.Factory())
             .createMediaSource(MediaItem.fromUri(channel.streamUrl))

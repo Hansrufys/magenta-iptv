@@ -8,6 +8,7 @@ import androidx.leanback.widget.ArrayObjectAdapter
 import androidx.leanback.widget.HeaderItem
 import androidx.leanback.widget.ListRow
 import androidx.leanback.widget.ListRowPresenter
+import com.magenta.iptv.data.ChannelStore
 import com.magenta.iptv.data.model.Channel
 import com.magenta.iptv.ui.playback.PlaybackActivity
 
@@ -16,7 +17,7 @@ class ChannelBrowserFragment : BrowseSupportFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val channels = arguments?.getParcelableArrayList<Channel>("channels") ?: arrayListOf()
+        val channels = ChannelStore.load(requireContext())
 
         val grouped = channels.groupBy { it.groupTitle ?: "Uncategorized" }
 
@@ -37,7 +38,6 @@ class ChannelBrowserFragment : BrowseSupportFragment() {
             if (item is Channel) {
                 val index = channels.indexOf(item)
                 val intent = Intent(requireContext(), PlaybackActivity::class.java).apply {
-                    putParcelableArrayListExtra("channels", ArrayList(channels))
                     putExtra("selectedIndex", if (index >= 0) index else 0)
                 }
                 startActivity(intent)

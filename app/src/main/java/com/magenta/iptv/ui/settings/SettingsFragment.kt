@@ -13,9 +13,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.magenta.iptv.R
+import com.magenta.iptv.data.ChannelStore
 import com.magenta.iptv.data.repository.ChannelRepository
 import com.magenta.iptv.ui.browse.BrowseActivity
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -80,15 +80,13 @@ class SettingsFragment : Fragment() {
 
                     result.onSuccess { channels ->
                         if (!isAdded) return@onSuccess
-                        // Mark channels as loaded
+                        ChannelStore.save(requireContext(), channels)
                         requireContext().getSharedPreferences(prefsName, Context.MODE_PRIVATE)
                             .edit()
                             .putBoolean(keyChannelsLoaded, true)
                             .apply()
 
-                        // Start BrowseActivity with channel list
                         val intent = Intent(requireContext(), BrowseActivity::class.java).apply {
-                            putParcelableArrayListExtra("channels", ArrayList(channels))
                             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                         }
                         startActivity(intent)

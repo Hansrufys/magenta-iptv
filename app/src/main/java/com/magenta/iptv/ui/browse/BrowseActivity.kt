@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.KeyEvent
 import androidx.fragment.app.FragmentActivity
 import com.magenta.iptv.R
-import com.magenta.iptv.data.model.Channel
 import com.magenta.iptv.ui.settings.SettingsActivity
 
 class BrowseActivity : FragmentActivity() {
@@ -15,12 +14,7 @@ class BrowseActivity : FragmentActivity() {
         setContentView(R.layout.activity_browse)
 
         if (savedInstanceState == null) {
-            val channels = intent.getParcelableArrayListExtra<Channel>("channels") ?: arrayListOf()
-            val fragment = ChannelBrowserFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelableArrayList("channels", channels)
-                }
-            }
+            val fragment = ChannelBrowserFragment()
             supportFragmentManager.beginTransaction()
                 .replace(R.id.browse_container, fragment)
                 .commit()

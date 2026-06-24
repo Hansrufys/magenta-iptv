@@ -7,10 +7,13 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
+import com.magenta.iptv.data.ChannelStore
 import com.magenta.iptv.data.repository.ChannelRepository
 import com.magenta.iptv.ui.browse.BrowseActivity
 import com.magenta.iptv.ui.settings.SettingsActivity
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : FragmentActivity() {
 
@@ -22,13 +25,14 @@ class MainActivity : FragmentActivity() {
         val m3uUrl = prefs.getString("pref_m3u_url", "") ?: ""
 
         if (m3uUrl.isNotEmpty()) {
-            // URL exists — fetch channels and navigate to BrowseActivity
             val progressBar = findViewById<ProgressBar>(R.id.main_progress)
             progressBar.visibility = View.VISIBLE
 
             lifecycleScope.launch {
                 val repository = ChannelRepository()
-                val result = repository.fetchChannels(m3uUrl)
+                val result = withContext(Dispatchers.IO) {
+                    repository.fetchChannels(m3uUrl)
+                }
 
                 progressBar.visibility = View.GONE
 
@@ -41,9 +45,8 @@ class MainActivity : FragmentActivity() {
                         ).show()
                         return@launch
                     }
-                    val intent = Intent(this@MainActivity, BrowseActivity::class.java).apply {
-                        putParcelableArrayListExtra("channels", ArrayList(channels))
-                    }
+                    ChannelStore.save(this@MainActivity, channels)
+                    val intent = Intent(this@MainActivity, BrowseActivity::class.java)
                     startActivity(intent)
                     finish()
                 }.onFailure { error ->
@@ -55,7 +58,6 @@ class MainActivity : FragmentActivity() {
                 }
             }
         } else {
-            // No URL configured — go to settings
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
             finish()

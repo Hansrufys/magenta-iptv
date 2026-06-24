@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.MagentaIptv" parent="Theme.Leanback" />
+    <style name="Theme.MagentaIptv" parent="Theme.Leanback">
+        <item name="android:windowBackground">@color/netflix_black</item>
+        <item name="android:colorPrimary">@color/netflix_red</item>
+        <item name="android:colorAccent">@color/netflix_red</item>
+        <item name="android:textColorPrimary">@color/netflix_white</item>
+        <item name="android:textColorSecondary">@color/netflix_text</item>
+        <item name="android:colorBackground">@color/netflix_black</item>
+        <item name="android:navigationBarColor">@color/netflix_black</item>
+        <item name="android:statusBarColor">@color/netflix_black</item>
+    </style>
 </resources>

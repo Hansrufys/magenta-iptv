@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ic_launcher_background">#1a1a2e</color>
+    <!-- Netflix dark palette -->
+    <color name="netflix_black">#FF141414</color>
+    <color name="netflix_dark">#FF1A1A2E</color>
+    <color name="netflix_surface">#FF222236</color>
+    <color name="netflix_card">#FF2A2A3C</color>
+    <color name="netflix_red">#FFE50914</color>
+    <color name="netflix_red_dark">#FFB20710</color>
+    <color name="netflix_white">#FFFFFFFF</color>
+    <color name="netflix_text">#FFB3B3B3</color>
+    <color name="netflix_text_dim">#FF666666</color>
+    <color name="netflix_glass">#1AFFFFFF</color>
+    <color name="netflix_glass_border">#33FFFFFF</color>
+    <color name="netflix_hero_gradient_start">#00000000</color>
+    <color name="netflix_hero_gradient_end">#E6141414</color>
+    <color name="netflix_sidebar_bg">#CC111122</color>
+    <color name="netflix_overlay">#99000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="ic_launcher_background">#141414</color>
 </resources>

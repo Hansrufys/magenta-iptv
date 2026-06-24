@@ -28,7 +28,7 @@ class CardPresenter : Presenter() {
 
         Glide.with(viewHolder.view.context)
             .load(channel.logoUrl)
-            .placeholder(R.drawable.leanback_icon)
+            .placeholder(R.drawable.tv_banner)
             .into(cardView.mainImageView)
     }
 

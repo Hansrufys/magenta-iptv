@@ -22,6 +22,11 @@ object ChannelStore {
         return gson.fromJson(file.readText(), type) ?: emptyList()
     }
 
+    fun hasChannels(context: Context): Boolean {
+        val file = File(context.filesDir, FILE_NAME)
+        return file.exists() && file.length() > 10
+    }
+
     fun clear(context: Context) {
         val file = File(context.filesDir, FILE_NAME)
         if (file.exists()) file.delete()

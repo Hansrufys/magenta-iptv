@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1a1a2e"
+    android:background="#141414"
     android:fillViewport="true">
 
     <LinearLayout
@@ -16,11 +16,44 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Magenta IPTV Settings"
-            android:textSize="24sp"
+            android:text="Magenta IPTV"
+            android:textSize="28sp"
             android:textStyle="bold"
-            android:textColor="#ffffff"
+            android:textColor="#E50914"
+            android:layout_marginBottom="8dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Settings"
+            android:textSize="16sp"
+            android:textColor="#80ffffff"
             android:layout_marginBottom="48dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+
+        <!-- Default Arabic Channels Info -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Default Arabic Playlists (auto-loaded)"
+            android:textSize="14sp"
+            android:textColor="#E50914"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+
+        <TextView
+            android:id="@+id/tv_default_sources"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#b0b0b0"
+            android:textSize="12sp"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginBottom="24dp"
             android:focusable="true"
             android:focusableInTouchMode="true" />
 
@@ -28,7 +61,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="M3U Playlist URL"
+            android:text="Custom M3U Playlist URL (optional)"
             android:textSize="16sp"
             android:textColor="#ffffff"
             android:layout_marginBottom="8dp"
@@ -40,10 +73,10 @@
             android:id="@+id/et_m3u_url"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:hint="Enter M3U playlist URL"
+            android:hint="Leave empty to use Arabic defaults"
             android:inputType="textUri"
             android:textColor="#ffffff"
-            android:textColorHint="#80ffffff"
+            android:textColorHint="#60ffffff"
             android:background="@android:color/transparent"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
@@ -72,7 +105,7 @@
             android:hint="Enter EPG XMLTV URL (optional)"
             android:inputType="textUri"
             android:textColor="#ffffff"
-            android:textColorHint="#80ffffff"
+            android:textColorHint="#60ffffff"
             android:background="@android:color/transparent"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
@@ -90,7 +123,20 @@
             android:text="Load Channels"
             android:textSize="18sp"
             android:textColor="#ffffff"
-            android:backgroundTint="#e91e63"
+            android:backgroundTint="#E50914"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Reset Button -->
+        <Button
+            android:id="@+id/btn_reset"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Reset to Default Arabic Channels"
+            android:textSize="14sp"
+            android:textColor="#b0b0b0"
+            android:backgroundTint="#2a2a2a"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:layout_marginBottom="24dp" />
@@ -101,7 +147,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            android:indeterminateTint="#e91e63"
+            android:indeterminateTint="#E50914"
             android:layout_marginTop="16dp" />
 
     </LinearLayout>

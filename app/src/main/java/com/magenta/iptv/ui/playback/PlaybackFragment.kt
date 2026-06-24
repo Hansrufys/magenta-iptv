@@ -126,7 +126,8 @@ class PlaybackFragment : Fragment() {
             return
         }
 
-        val player = ExoPlayer.Builder(activity!!).build()
+        val ctx = context ?: return
+        val player = ExoPlayer.Builder(ctx).build()
         exoPlayer = player
 
         player.addListener(object : Player.Listener {

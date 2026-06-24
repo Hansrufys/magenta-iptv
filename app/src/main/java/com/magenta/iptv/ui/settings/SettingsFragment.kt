@@ -15,7 +15,10 @@ import androidx.lifecycle.lifecycleScope
 import com.magenta.iptv.R
 import com.magenta.iptv.data.repository.ChannelRepository
 import com.magenta.iptv.ui.browse.BrowseActivity
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class SettingsFragment : Fragment() {
 
@@ -65,32 +68,48 @@ class SettingsFragment : Fragment() {
             btnLoadChannels.isEnabled = false
 
             // Fetch channels
-            lifecycleScope.launch {
-                val repository = ChannelRepository()
-                val result = repository.fetchChannels(m3uUrl)
-
-                progressBar.visibility = View.GONE
-                btnLoadChannels.isEnabled = true
-
-                result.onSuccess { channels ->
-                    // Mark channels as loaded
-                    requireContext().getSharedPreferences(prefsName, Context.MODE_PRIVATE)
-                        .edit()
-                        .putBoolean(keyChannelsLoaded, true)
-                        .apply()
-
-                    // Start BrowseActivity with channel list
-                    val intent = Intent(requireContext(), BrowseActivity::class.java).apply {
-                        putParcelableArrayListExtra("channels", ArrayList(channels))
-                        flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            viewLifecycleOwner.lifecycleScope.launch {
+                try {
+                    val repository = ChannelRepository()
+                    val result = withContext(Dispatchers.IO) {
+                        repository.fetchChannels(m3uUrl)
                     }
-                    startActivity(intent)
-                }.onFailure { error ->
-                    Toast.makeText(
-                        requireContext(),
-                        "Failed to load channels: ${error.message}",
-                        Toast.LENGTH_LONG
-                    ).show()
+
+                    progressBar.visibility = View.GONE
+                    btnLoadChannels.isEnabled = true
+
+                    result.onSuccess { channels ->
+                        if (!isAdded) return@onSuccess
+                        // Mark channels as loaded
+                        requireContext().getSharedPreferences(prefsName, Context.MODE_PRIVATE)
+                            .edit()
+                            .putBoolean(keyChannelsLoaded, true)
+                            .apply()
+
+                        // Start BrowseActivity with channel list
+                        val intent = Intent(requireContext(), BrowseActivity::class.java).apply {
+                            putParcelableArrayListExtra("channels", ArrayList(channels))
+                            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        }
+                        startActivity(intent)
+                    }.onFailure { error ->
+                        if (!isAdded) return@onFailure
+                        Toast.makeText(
+                            requireContext(),
+                            "Failed to load channels: ${error.message}",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                } catch (e: Exception) {
+                    progressBar.visibility = View.GONE
+                    btnLoadChannels.isEnabled = true
+                    if (isAdded) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Error: ${e.localizedMessage ?: "Unknown error"}",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
                 }
             }
         }

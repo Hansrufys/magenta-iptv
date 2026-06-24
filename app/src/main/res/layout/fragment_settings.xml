@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1a1a2e"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="48dp"
+        android:gravity="center_horizontal">
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Magenta IPTV Settings"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#ffffff"
+            android:layout_marginBottom="48dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+
+        <!-- M3U URL Label -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="M3U Playlist URL"
+            android:textSize="16sp"
+            android:textColor="#ffffff"
+            android:layout_marginBottom="8dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+
+        <!-- M3U URL Input -->
+        <EditText
+            android:id="@+id/et_m3u_url"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="Enter M3U playlist URL"
+            android:inputType="textUri"
+            android:textColor="#ffffff"
+            android:textColorHint="#80ffffff"
+            android:background="@android:color/transparent"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:singleLine="true"
+            android:textSize="18sp"
+            android:layout_marginBottom="24dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+
+        <!-- EPG URL Label -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="EPG XMLTV URL (optional)"
+            android:textSize="16sp"
+            android:textColor="#ffffff"
+            android:layout_marginBottom="8dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+
+        <!-- EPG URL Input -->
+        <EditText
+            android:id="@+id/et_epg_url"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="Enter EPG XMLTV URL (optional)"
+            android:inputType="textUri"
+            android:textColor="#ffffff"
+            android:textColorHint="#80ffffff"
+            android:background="@android:color/transparent"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:singleLine="true"
+            android:textSize="18sp"
+            android:layout_marginBottom="32dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+
+        <!-- Load Channels Button -->
+        <Button
+            android:id="@+id/btn_load_channels"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Load Channels"
+            android:textSize="18sp"
+            android:textColor="#ffffff"
+            android:backgroundTint="#e91e63"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Progress Bar -->
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:indeterminateTint="#e91e63"
+            android:layout_marginTop="16dp" />
+
+    </LinearLayout>
+</ScrollView>
